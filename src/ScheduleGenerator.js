@@ -9,7 +9,7 @@ import { badMajors } from "./constants";
 
 async function getAllCourses() {
   try {
-    const data = await fetch("https://schedge.a1liu.com/2020/FA/UA/CORE");
+    const data = await fetch("https://nyu.a1liu.com/api/courses/fa2020/CORE-UA");
     // awaits for the promise to return the data
     const courses = await data.json();
 
@@ -131,7 +131,7 @@ function findSeminar(chosenSeminar, seminars) {
 async function validateRegistration(arrayOfReges, newReg) {
   let allReges = arrayOfReges.join(",") + "," + newReg;
   const data = await fetch(
-    "https://schedge.a1liu.com/2020/FA/generateSchedule?registrationNumbers=" +
+    "https://nyu.a1liu.com/generateSchedule/fa2020?registrationNumbers=" +
       allReges
   );
   const checkValidSchedule = await data.json();
@@ -143,7 +143,7 @@ async function getMajor(chosenMajor) {
     return "No Major";
   }
   const data = await fetch(
-    "https://schedge.a1liu.com/2020/FA/UA/" + chosenMajor
+    "https://nyu.a1liu.com/api/courses/fa2020/" + chosenMajor + "-UA"
   );
   const majors = await data.json();
 
@@ -272,8 +272,8 @@ const ScheduleGenerator = () => {
 
   const logMajorSubjects = async (e) => {
     if (majors.length === 0) {
-      const response = await fetch("https://schedge.a1liu.com/subjects");
-      const subjects = await response.json();
+      const response = await fetch("https://nyu.a1liu.com/api/schools/fa2020");
+      const apiResponse = await response.json();
 
       let noMajor = { name: "No Major" };
 
